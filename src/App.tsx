@@ -1,4 +1,3 @@
-import React from 'react';
 import MainView from './components/MainView';
 import { DataProvider } from './context/DataContext';
 import { LanguageProvider } from './context/LanguageContext';
