@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+*.suo
+*.user
+.vscode/settings.json
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vercel
+.vercel
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Dummy test data (not needed in production)
+dummy_followers.json
+dummy_following.json
