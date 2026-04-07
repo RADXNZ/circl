@@ -41,14 +41,16 @@
   --glow-color-3: rgba(59, 130, 246, 0.08); /* faint blend */
 }
 
-.light {
-  --bg-color: #f1f5f9;      /* Softer gray, less blinding than pure white */
+:root.light,
+:root body.light,
+body.light {
+  --bg-color: #f1f5f9;
   --bg-gradient-1: #f8fafc;
   --bg-gradient-2: #e2e8f0;
   
-  --surface-color: rgba(255, 255, 255, 0.9); /* More opaque for text readability */
-  --text-primary: #0f172a;  /* Near black */
-  --text-secondary: #334155; /* Darker gray for better contrast */
+  --surface-color: rgba(255, 255, 255, 0.9);
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
   
   --border-color: rgba(148, 163, 184, 0.4);
   --border-hover: rgba(100, 116, 139, 0.6);
@@ -62,10 +64,16 @@
   --glow-color-3: rgba(59, 130, 246, 0.02);
 }
 
+/* Prevent flash of wrong theme on mobile */
+html {
+  color-scheme: dark light;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -81,6 +89,7 @@ body {
   position: relative;
   overflow-x: hidden;
   font-weight: 400;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Texture Grain - Premium Smooth Film Style */

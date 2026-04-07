@@ -18,98 +18,120 @@ export class ParserService {
 
   private static parseJSON(data: any): IGUser[] {
     const users: IGUser[] = [];
-    
-    // IG exports are notoriously messy JSON. We recursively search for "value" strings
-    // that look like usernames, or "href" that links to instagram.com/username
-    
-    const extractDeep = (obj: any) => {
-      if (!obj) return;
+
+    // System paths that are NOT real usernames
+    const SYSTEM_NAMES = new Set([
+      '_u', 'p', 'reels', 'tv', 'stories', 'explore',
+      'direct', 'accounts', 'instagram', 'support', 'help',
+      'followers', 'following', 'profile history', 'account', 'users',
+      'privacy', 'settings', 'notifications', 'activity', 'discover',
+    ]);
+
+    const sanitizeUsername = (val: string | undefined): string | undefined => {
+      if (!val || typeof val !== 'string') return undefined;
+      const clean = val.trim();
+      // Must look like a valid IG username
+      if (clean.length < 2) return undefined;
+      if (clean.includes(' ')) return undefined;
+      if (clean.startsWith('http')) return undefined;
+      if (SYSTEM_NAMES.has(clean.toLowerCase())) return undefined;
+      // Only allow valid IG username characters
+      if (!/^[@]?[a-zA-Z0-9._]{1,30}$/.test(clean)) return undefined;
+      return clean.startsWith('@') ? clean.substring(1) : clean;
+    };
+
+    const extractFromHref = (href: string): string | undefined => {
+      if (!href || !href.includes('instagram.com/')) return undefined;
+      const match = href.match(/instagram\.com\/([^\/\?#]+)/);
+      if (!match || !match[1]) return undefined;
+      return sanitizeUsername(match[1]);
+    };
+
+    const extractDeep = (obj: any): void => {
+      if (!obj || typeof obj !== 'object') return;
+
       if (Array.isArray(obj)) {
-        obj.forEach(extractDeep);
-      } else if (typeof obj === 'object') {
-        
-        // Structure 1: string_list_data wrapper
-        if (obj.string_list_data && Array.isArray(obj.string_list_data)) {
-          obj.string_list_data.forEach((item: any) => {
-            const val = item.value || item.title || obj.title;
-            if (val && typeof val === 'string') {
-              let username = val.trim();
-              if (username.startsWith('@')) username = username.substring(1);
-              users.push({ username, url: item.href || '', timestamp: item.timestamp });
-            }
-          });
-        } 
-        // Structure 2: Direct object with href and value/title
-        else if (obj.href && typeof obj.href === 'string') {
-          const val = obj.value || obj.title || obj.username;
-          if (val && typeof val === 'string') {
-            let username = val.trim();
-            if (username.startsWith('@')) username = username.substring(1);
-            users.push({ username, url: obj.href, timestamp: obj.timestamp });
-          } else if (obj.href.includes('instagram.com/')) {
-            // Fallback: extract username from URL if it's an instagram link but no value was provided
-            const match = obj.href.match(/instagram\.com\/([^\/\?]+)/);
-            if (match && match[1]) {
-               users.push({ username: match[1], url: obj.href, timestamp: obj.timestamp });
-            }
+        // Simple array: recurse into each element
+        for (const item of obj) extractDeep(item);
+        return;
+      }
+
+      // Structure 1: { string_list_data: [...] } — Instagram's standard format
+      if (obj.string_list_data && Array.isArray(obj.string_list_data)) {
+        for (const item of obj.string_list_data) {
+          let username: string | undefined =
+            sanitizeUsername(item.value) ||
+            sanitizeUsername(item.username) ||
+            extractFromHref(item.href) ||
+            sanitizeUsername(obj.title);
+
+          if (username) {
+            users.push({
+              username,
+              url: item.href || '',
+              timestamp: item.timestamp,
+            });
           }
         }
+        // ⚠️ CRITICAL: Do NOT recurse further into this object's values —
+        // that would double-process the string_list_data items above.
+        return;
+      }
 
-        Object.values(obj).forEach(extractDeep);
+      // Structure 2: Direct object with href (link-style)
+      if (obj.href && typeof obj.href === 'string') {
+        const username: string | undefined =
+          sanitizeUsername(obj.value) ||
+          sanitizeUsername(obj.username) ||
+          sanitizeUsername(obj.title) ||
+          extractFromHref(obj.href);
+
+        if (username) {
+          users.push({ username, url: obj.href, timestamp: obj.timestamp });
+        }
+        // ⚠️ Do NOT recurse further — prevent double-processing nested props
+        return;
+      }
+
+      // Structure 3: Unknown object — recurse into values to discover nested data
+      for (const val of Object.values(obj)) {
+        if (val && typeof val === 'object') extractDeep(val);
       }
     };
-    
+
     extractDeep(data);
-    
-    // Clean up empty, invalid, or system entries
-    const systemNames = new Set([
-      '_u', 'p', 'reels', 'tv', 'stories', 'explore', 
-      'direct', 'accounts', 'instagram', 'support', 'help'
-    ]);
-    
-    const validUsers = users.map(u => {
-      // Fix _u/ capturing bug from fallback regex
-      if (u.username === '_u' && u.url && u.url.includes('_u/')) {
-        const m = u.url.match(/_u\/([^\/\?]+)/);
-        if (m && m[1]) u.username = m[1];
-      }
-      return u;
-    }).filter(u => 
-      u.username && 
-      !u.username.includes(' ') && 
-      !systemNames.has(u.username.toLowerCase())
-    );
-    
-    return this.deduplicate(validUsers);
+
+    return this.deduplicate(users);
   }
 
   private static parseHTML(html: string): IGUser[] {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const links = doc.querySelectorAll('a');
-    
-    const users: IGUser[] = [];
-    
-    links.forEach(link => {
-      const username = link.textContent?.trim();
-      const href = link.getAttribute('href') || '';
-      
-      // Instagram exports have a specific structure, we only want actual users
-      if (username && href.includes('instagram.com') && !username.includes(' ')) {
-        let parent = link.parentElement;
-        let tsStr = parent?.nextElementSibling?.textContent?.trim();
-        let timestamp: number | undefined;
-        
-        if (tsStr && !isNaN(Date.parse(tsStr))) {
-          timestamp = new Date(tsStr).getTime();
-        }
 
-        users.push({
-          username,
-          url: href,
-          timestamp,
-        });
+    const users: IGUser[] = [];
+
+    links.forEach(link => {
+      const href = link.getAttribute('href') || '';
+      if (!href.includes('instagram.com/')) return;
+
+      // Try to extract username from the href itself (most reliable)
+      const match = href.match(/instagram\.com\/([^\/\?#]+)/);
+      const hrefUsername = match?.[1];
+
+      // Also try the link text
+      const textUsername = link.textContent?.trim();
+
+      const username = hrefUsername || textUsername;
+      if (!username || username.includes(' ') || username.length < 2) return;
+
+      let timestamp: number | undefined;
+      const tsStr = link.parentElement?.nextElementSibling?.textContent?.trim();
+      if (tsStr && !isNaN(Date.parse(tsStr))) {
+        timestamp = new Date(tsStr).getTime();
       }
+
+      users.push({ username, url: href, timestamp });
     });
 
     return this.deduplicate(users);
@@ -118,10 +140,13 @@ export class ParserService {
   private static deduplicate(users: IGUser[]): IGUser[] {
     const map = new Map<string, IGUser>();
     for (const u of users) {
-      if (!map.has(u.username)) {
-        map.set(u.username, u);
+      // Normalize username to lowercase for accurate deduplication
+      const key = u.username.toLowerCase();
+      if (!map.has(key)) {
+        map.set(key, u);
       }
     }
     return Array.from(map.values());
   }
 }
+
