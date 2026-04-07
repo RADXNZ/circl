@@ -6,26 +6,33 @@ export class AnalysisEngine {
     const followers: Record<string, IGUser> = {};
     const following: Record<string, IGUser> = {};
     
-    followersArr.forEach(u => followers[u.username] = u);
-    followingArr.forEach(u => following[u.username] = u);
+    // Normalize to lowercase to prevent case-sensitivity mismatches between files
+    followersArr.forEach(u => {
+      const key = u.username.toLowerCase();
+      followers[key] = { ...u, username: u.username };
+    });
+    followingArr.forEach(u => {
+      const key = u.username.toLowerCase();
+      following[key] = { ...u, username: u.username };
+    });
     
     const notFollowingBack: IGUser[] = [];
     const fans: IGUser[] = [];
     const mutuals: IGUser[] = [];
     
     // Check who we follow
-    for (const username in following) {
-      if (!followers[username]) {
-        notFollowingBack.push(following[username]);
+    for (const key in following) {
+      if (!followers[key]) {
+        notFollowingBack.push(following[key]);
       } else {
-        mutuals.push(following[username]);
+        mutuals.push(following[key]);
       }
     }
     
-    // Check who follows us
-    for (const username in followers) {
-      if (!following[username]) {
-        fans.push(followers[username]);
+    // Check who follows us but we don't follow back
+    for (const key in followers) {
+      if (!following[key]) {
+        fans.push(followers[key]);
       }
     }
     

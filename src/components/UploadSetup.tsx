@@ -42,12 +42,15 @@ export const UploadSetup: React.FC = () => {
           <div className="grid gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
             <FileUploader 
               label={t('upload.followersBox')} 
-              isUploaded={!!state.followersData} 
+              isUploaded={!!state.followersData}
+              existingData={state.followersData}
+              supportsMultiple={true}
               onDataParsed={(data) => setBasicData(data, state.followingData)}
             />
             <FileUploader 
               label={t('upload.followingBox')} 
-              isUploaded={!!state.followingData} 
+              isUploaded={!!state.followingData}
+              existingData={state.followingData}
               onDataParsed={(data) => setBasicData(state.followersData, data)}
             />
           </div>
@@ -58,12 +61,15 @@ export const UploadSetup: React.FC = () => {
               <div className="grid gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
                 <FileUploader 
                   label={t('upload.oldFollowers')} 
-                  isUploaded={!!state.oldFollowersData} 
+                  isUploaded={!!state.oldFollowersData}
+                  existingData={state.oldFollowersData}
+                  supportsMultiple={true}
                   onDataParsed={(data) => setCompareData({ oldFollowersData: data })}
                 />
                 <FileUploader 
                   label={t('upload.oldFollowing')} 
-                  isUploaded={!!state.oldFollowingData} 
+                  isUploaded={!!state.oldFollowingData}
+                  existingData={state.oldFollowingData}
                   onDataParsed={(data) => setCompareData({ oldFollowingData: data })}
                 />
               </div>
@@ -73,12 +79,15 @@ export const UploadSetup: React.FC = () => {
               <div className="grid gap-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
                 <FileUploader 
                   label={t('upload.newFollowers')} 
-                  isUploaded={!!state.newFollowersData} 
+                  isUploaded={!!state.newFollowersData}
+                  existingData={state.newFollowersData}
+                  supportsMultiple={true}
                   onDataParsed={(data) => setCompareData({ newFollowersData: data })}
                 />
                 <FileUploader 
                   label={t('upload.newFollowing')} 
-                  isUploaded={!!state.newFollowingData} 
+                  isUploaded={!!state.newFollowingData}
+                  existingData={state.newFollowingData}
                   onDataParsed={(data) => setCompareData({ newFollowingData: data })}
                 />
               </div>
