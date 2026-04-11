@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'circl-theme';
-const DARK_BG = '#060a13';
+const DARK_BG  = '#060a13';
 const LIGHT_BG = '#f1f5f9';
 
 function getInitialTheme(): 'light' | 'dark' {
@@ -15,26 +15,19 @@ function applyTheme(theme: 'light' | 'dark') {
   const html = document.documentElement;
   const isLight = theme === 'light';
 
-  // 1. Toggle class on <html> — this is what CSS variables respond to
-  html.classList.toggle('light', isLight);
-  html.classList.toggle('dark', !isLight);
+  // Primary mechanism: data-theme attribute (most reliable across mobile browsers)
+  html.setAttribute('data-theme', theme);
 
-  // 2. Set background-color directly on <html> so iOS overscroll area matches
+  // Set background-color on <html> directly — fixes iOS overscroll bounce area color
   html.style.backgroundColor = isLight ? LIGHT_BG : DARK_BG;
 
-  // 3. Update color-scheme on <html> — controls native form controls, scrollbars, etc.
+  // Update color-scheme — affects native scrollbars, inputs, selects on mobile
   html.style.colorScheme = isLight ? 'light' : 'dark';
 
-  // 4. Update <meta name="theme-color"> — controls Android/iOS browser chrome color
+  // Update browser chrome color (Android address bar, iOS Safari bar)
   const metaThemeColor = document.getElementById('meta-theme-color');
   if (metaThemeColor) {
     metaThemeColor.setAttribute('content', isLight ? LIGHT_BG : DARK_BG);
-  }
-
-  // 5. Update apple-mobile-web-app-status-bar-style for iOS PWA
-  const metaApple = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-  if (metaApple) {
-    metaApple.setAttribute('content', isLight ? 'default' : 'black-translucent');
   }
 }
 
@@ -46,7 +39,7 @@ export function useTheme() {
     localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
 
-  // Sync with OS preference changes (only if user hasn't manually chosen)
+  // Sync with OS preference if user hasn't manually chosen
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {

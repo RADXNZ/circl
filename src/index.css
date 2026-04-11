@@ -1,14 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-/* ============================================
-   THEME VARIABLES — defaults = DARK
-   ============================================ */
+/* ============================================================
+   THEME VARIABLES
+   Default = DARK (no selector needed, applies to :root)
+   Light mode = [data-theme="light"] on <html>
+   ============================================================ */
 :root {
+  /* --- Dark Mode Defaults --- */
   --bg-color: #060a13;
-  --bg-gradient-1: #070c18;
-  --bg-gradient-2: #08101e;
 
-  --surface-color: rgba(15, 23, 42, 0.55);
+  --surface-color: rgba(15, 23, 42, 0.6);
   --text-primary: #e2e8f0;
   --text-secondary: #94a3b8;
 
@@ -24,58 +25,62 @@
   --warning-color: #eab308;
   --info-color: #3b82f6;
 
-  --tint-danger: rgba(239, 68, 68, 0.12);
-  --tint-success: rgba(16, 185, 129, 0.12);
-  --tint-warning: rgba(234, 179, 8, 0.12);
-  --tint-info: rgba(59, 130, 246, 0.12);
+  --tint-danger:  rgba(239, 68, 68, 0.14);
+  --tint-success: rgba(16, 185, 129, 0.14);
+  --tint-warning: rgba(234, 179, 8, 0.14);
+  --tint-info:    rgba(59, 130, 246, 0.14);
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.6);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.7), 0 2px 4px -1px rgba(0,0,0,0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.3);
 
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-full: 9999px;
 
-  --glow-color-1: rgba(16, 185, 129, 0.1);
-  --glow-color-2: rgba(6, 182, 212, 0.12);
-  --glow-color-3: rgba(59, 130, 246, 0.06);
+  --glow-1: rgba(16, 185, 129, 0.10);
+  --glow-2: rgba(6, 182, 212, 0.12);
+  --glow-3: rgba(59, 130, 246, 0.06);
+
+  --body-bg-start: rgba(7, 12, 24, 0.9);
+  --body-bg-end: rgba(8, 16, 30, 0.9);
 }
 
-/* ============================================
-   LIGHT MODE — applied when html has class "light"
-   ============================================ */
-html.light {
+/* ============================================================
+   LIGHT MODE — selector: [data-theme="light"] on <html>
+   This is the most reliable selector across all browsers.
+   ============================================================ */
+[data-theme="light"] {
   --bg-color: #f1f5f9;
-  --bg-gradient-1: #f8fafc;
-  --bg-gradient-2: #e2e8f0;
 
-  /* Solid white surface — no transparency issues on mobile */
-  --surface-color: rgba(255, 255, 255, 0.97);
+  /* Solid — no transparency issues on mobile */
+  --surface-color: #ffffff;
   --text-primary: #0f172a;
   --text-secondary: #475569;
 
-  --border-color: rgba(148, 163, 184, 0.5);
-  --border-hover: rgba(100, 116, 139, 0.7);
+  --border-color: rgba(148, 163, 184, 0.55);
+  --border-hover: rgba(100, 116, 139, 0.75);
 
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
-  --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 8px -1px rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.07);
+  --shadow-lg: 0 10px 20px -3px rgba(0,0,0,0.12), 0 4px 8px -2px rgba(0,0,0,0.06);
 
-  --glow-color-1: rgba(16, 185, 129, 0.06);
-  --glow-color-2: rgba(6, 182, 212, 0.06);
-  --glow-color-3: rgba(59, 130, 246, 0.04);
+  --glow-1: rgba(16, 185, 129, 0.06);
+  --glow-2: rgba(6, 182, 212, 0.06);
+  --glow-3: rgba(59, 130, 246, 0.04);
 
-  /* Light mode tints need to be more visible */
-  --tint-danger: rgba(239, 68, 68, 0.08);
+  --tint-danger:  rgba(239, 68, 68, 0.08);
   --tint-success: rgba(16, 185, 129, 0.08);
   --tint-warning: rgba(234, 179, 8, 0.09);
-  --tint-info: rgba(59, 130, 246, 0.08);
+  --tint-info:    rgba(59, 130, 246, 0.08);
+
+  --body-bg-start: #f8fafc;
+  --body-bg-end: #e2e8f0;
 }
 
-/* ============================================
+/* ============================================================
    GLOBAL RESET
-   ============================================ */
+   ============================================================ */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -83,24 +88,31 @@ html.light {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ============================================================
+   HTML ELEMENT
+   background-color on html fixes iOS overscroll bounce area
+   ============================================================ */
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
-  /* Background on html itself fixes iOS overscroll/bounce area color */
+  /* Dark default — overridden inline by FOUC script + useTheme */
   background-color: #060a13;
 }
 
-html.light {
+[data-theme="light"] {
   color-scheme: light;
   background-color: #f1f5f9;
 }
 
-/* ============================================
-   BODY & BACKGROUND
-   ============================================ */
+/* ============================================================
+   BODY
+   ============================================================ */
 body {
   font-family: 'Outfit', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-color);
+  background-image:
+    radial-gradient(ellipse at top left, var(--body-bg-start), transparent 65%),
+    radial-gradient(ellipse at bottom right, var(--body-bg-end), transparent 65%);
   color: var(--text-primary);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -110,26 +122,10 @@ body {
   position: relative;
   overflow-x: hidden;
   font-weight: 400;
-  /* Smooth transition on theme toggle */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Light mode body gradient */
-html.light body {
-  background-image:
-    radial-gradient(ellipse at top left, #f8fafc, transparent 70%),
-    radial-gradient(ellipse at bottom right, #e2e8f0, transparent 70%);
-}
-
-/* Dark mode body gradient */
-html.dark body,
-body:not(html.light body) {
-  background-image:
-    radial-gradient(ellipse at top left, rgba(7, 12, 24, 0.8), transparent 70%),
-    radial-gradient(ellipse at bottom right, rgba(8, 16, 30, 0.8), transparent 70%);
-}
-
-/* Atmospheric glow — desktop only to save mobile GPU */
+/* Atmospheric glow layer — desktop only for performance */
 body::after {
   content: "";
   position: fixed;
@@ -137,14 +133,14 @@ body::after {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 10% 10%, var(--glow-color-1) 0%, transparent 45%),
-    radial-gradient(circle at 90% 90%, var(--glow-color-2) 0%, transparent 55%),
-    radial-gradient(circle at 50% 50%, var(--glow-color-3) 0%, transparent 60%);
+    radial-gradient(circle at 10% 15%, var(--glow-1) 0%, transparent 45%),
+    radial-gradient(circle at 88% 85%, var(--glow-2) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, var(--glow-3) 0%, transparent 60%);
 }
 
 @media (min-width: 768px) {
   body::after {
-    filter: blur(80px);
+    filter: blur(70px);
     animation: atmospheric-drift 20s ease-in-out infinite alternate;
   }
 }
@@ -155,9 +151,9 @@ body::after {
   100% { transform: scale(0.98) translate(-1%, -1%); }
 }
 
-/* ============================================
+/* ============================================================
    TYPOGRAPHY
-   ============================================ */
+   ============================================================ */
 h1, h2, h3, h4 {
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -178,19 +174,18 @@ button {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ============================================
+/* ============================================================
    ANIMATIONS
-   ============================================ */
+   ============================================================ */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -199,32 +194,28 @@ button {
   }
 }
 
-/* ============================================
+/* ============================================================
    LAYOUT
-   ============================================ */
+   ============================================================ */
 .container {
   max-width: 1024px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 1.75rem 1rem;
   position: relative;
   z-index: 1;
 }
 
 @media (min-width: 640px) {
-  .container {
-    padding: 3rem 1.5rem;
-  }
+  .container { padding: 2.5rem 1.5rem; }
 }
 
 @media (min-width: 1024px) {
-  .container {
-    padding: 4rem 2rem;
-  }
+  .container { padding: 4rem 2rem; }
 }
 
-/* ============================================
-   CARDS & GLASS
-   ============================================ */
+/* ============================================================
+   CARDS
+   ============================================================ */
 .card {
   background: var(--surface-color);
   border: 1px solid var(--border-color);
@@ -234,18 +225,15 @@ button {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* Only apply backdrop-filter on capable devices */
 @supports (backdrop-filter: blur(1px)) {
-  .card {
+  [data-theme="dark"] .card {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
 }
 
 @media (min-width: 768px) {
-  .card {
-    padding: 1.5rem;
-  }
+  .card { padding: 1.5rem; }
 }
 
 .card:hover {
@@ -256,12 +244,12 @@ button {
 .glass-panel {
   background: var(--surface-color);
   border: 1px solid var(--border-color);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
 }
 
 @supports (backdrop-filter: blur(1px)) {
-  .glass-panel {
+  [data-theme="dark"] .glass-panel {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
@@ -270,31 +258,25 @@ button {
 .glass-panel:hover {
   transform: translateY(-3px);
   border-color: var(--primary-color);
-  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.18);
+  box-shadow: 0 10px 20px -3px rgba(16, 185, 129, 0.18);
 }
 
-/* ============================================
+/* ============================================================
    BUTTONS
-   ============================================ */
+   ============================================================ */
 .btn-primary {
   background: var(--primary-gradient);
-  color: white;
+  color: #ffffff;
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 0.9rem;
-  box-shadow: 0 4px 12px -4px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 12px -4px rgba(16, 185, 129, 0.45);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-primary:hover {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 8px 20px -4px rgba(16, 185, 129, 0.5);
-}
-
-.btn-primary:active {
-  transform: translateY(0) scale(0.98);
-}
+.btn-primary:hover { transform: translateY(-1px) scale(1.02); box-shadow: 0 8px 20px -4px rgba(16, 185, 129, 0.55); }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
 
 .btn-secondary {
   background: var(--surface-color);
@@ -307,20 +289,12 @@ button {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-secondary:hover {
-  background-color: var(--border-color);
-  border-color: var(--border-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
+.btn-secondary:hover { background-color: var(--border-color); border-color: var(--border-hover); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.btn-secondary:active { transform: translateY(0); }
 
-.btn-secondary:active {
-  transform: translateY(0);
-}
-
-/* ============================================
+/* ============================================================
    GRADIENT TEXT
-   ============================================ */
+   ============================================================ */
 .gradient-text {
   background: var(--primary-gradient);
   -webkit-background-clip: text;
@@ -328,13 +302,14 @@ button {
   background-clip: text;
 }
 
-/* ============================================
+/* ============================================================
    FLEX UTILITIES
-   ============================================ */
+   ============================================================ */
 .flex          { display: flex; }
 .flex-col      { flex-direction: column; }
 .flex-wrap     { flex-wrap: wrap; }
 .items-center  { align-items: center; }
+.items-start   { align-items: flex-start; }
 .items-end     { align-items: flex-end; }
 .justify-center  { justify-content: center; }
 .justify-between { justify-content: space-between; }
@@ -343,13 +318,15 @@ button {
 .gap-6  { gap: 1.5rem; }
 .gap-8  { gap: 2rem; }
 .flex-shrink-0 { flex-shrink: 0; }
+.flex-1        { flex: 1; }
 .inline-flex   { display: inline-flex; }
 
-/* ============================================
-   SPACING UTILITIES
-   ============================================ */
+/* ============================================================
+   SPACING
+   ============================================================ */
 .mt-4  { margin-top: 1rem; }
 .mt-8  { margin-top: 2rem; }
+.mb-2  { margin-bottom: 0.5rem; }
 .mb-4  { margin-bottom: 1rem; }
 .mb-6  { margin-bottom: 1.5rem; }
 .mb-8  { margin-bottom: 2rem; }
@@ -358,24 +335,30 @@ button {
 .mb-16 { margin-bottom: 4rem; }
 .mb-24 { margin-bottom: 6rem; }
 .mx-auto { margin-left: auto; margin-right: auto; }
+.p-4   { padding: 1rem; }
 .p-5   { padding: 1.25rem; }
+.p-8   { padding: 2rem; }
 .px-4  { padding-left: 1rem; padding-right: 1rem; }
 .py-2  { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 .pb-8  { padding-bottom: 2rem; }
+.mt-1  { margin-top: 0.25rem; }
+.mt-2  { margin-top: 0.5rem; }
 .w-full { width: 100%; }
 
-/* ============================================
-   TEXT UTILITIES
-   ============================================ */
+/* ============================================================
+   TEXT
+   ============================================================ */
 .text-center    { text-align: center; }
 .text-secondary { color: var(--text-secondary); }
 .text-sm        { font-size: 0.875rem; }
 .font-bold      { font-weight: 700; }
+.font-medium    { font-weight: 500; }
 .max-w-3xl      { max-width: 48rem; }
+.text-primary   { color: var(--primary-color); }
 
-/* ============================================
+/* ============================================================
    GRID
-   ============================================ */
+   ============================================================ */
 .grid { display: grid; }
 .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
 
@@ -388,9 +371,9 @@ button {
   .md\:w-auto      { width: auto; }
 }
 
-/* ============================================
+/* ============================================================
    MISC UTILITIES
-   ============================================ */
+   ============================================================ */
 .rounded-2xl     { border-radius: 1rem; }
 .rounded-full    { border-radius: 9999px; }
 .cursor-pointer  { cursor: pointer; }
@@ -398,62 +381,40 @@ button {
 .duration-300    { transition-duration: 300ms; }
 .bg-transparent  { background-color: transparent; }
 .border-transparent { border-color: transparent; }
-.border-b        { border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: var(--border-color); }
+.border-b { border-bottom: 1px solid var(--border-color); }
+.pb-2     { padding-bottom: 0.5rem; }
 
-/* App-specific card aliases */
 .bg-card        { background-color: var(--surface-color); }
 .outline-border { border: 1px solid var(--border-color); }
 
 /* FAQ hover */
-.hover\:bg-white\/5:hover { background-color: rgba(255, 255, 255, 0.05); }
+.hover\:bg-white\/5:hover { background-color: rgba(128, 128, 128, 0.08); }
 
 /* Primary tint badge */
 .bg-primary\/10 { background-color: rgba(16, 185, 129, 0.1); }
-.text-primary   { color: var(--primary-color); }
 
-/* ============================================
-   HEADER RESPONSIVE FIX
-   ============================================ */
+/* ============================================================
+   HEADER
+   ============================================================ */
 header {
   flex-wrap: wrap;
   gap: 0.75rem;
 }
 
-/* ============================================
-   LANDING PAGE RESPONSIVE
-   ============================================ */
-.hero-section h1 {
-  font-size: clamp(2rem, 6vw, 3.5rem);
-}
-
-.hero-section p {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-}
-
-.features-section,
-.tutorial-section,
-.faq-section {
-  margin-bottom: clamp(3rem, 8vw, 6rem);
-}
-
-/* ============================================
-   SCROLL UTILITIES
-   ============================================ */
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--border-hover) transparent;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: var(--border-hover); border-radius: 3px; }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--border-hover);
-  border-radius: 3px;
-}
+/* ============================================================
+   POSITION UTIL
+   ============================================================ */
+.position-relative { position: relative; }
+.z-10 { z-index: 10; }
