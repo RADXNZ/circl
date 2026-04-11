@@ -12,7 +12,14 @@ function AppContent() {
     <DataProvider>
       <LanguageProvider>
         <div className="container">
-          <header className="flex items-center justify-between mb-8">
+          <header style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '2rem',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+          }}>
             <button 
               onClick={goHome}
               aria-label="Go to Home"
@@ -20,14 +27,15 @@ function AppContent() {
               style={{ 
                 display: 'flex', 
                 alignItems: 'center', 
-                gap: '1rem', 
+                gap: '0.75rem', 
                 cursor: 'pointer',
                 background: 'none',
                 border: 'none',
                 padding: 0,
+                flexShrink: 0,
               }}
             >
-              <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <linearGradient id="arcGradient" x1="2" y1="16" x2="30" y2="16" gradientUnits="userSpaceOnUse">
                     <stop stopColor="#1D9E75" />
@@ -40,14 +48,12 @@ function AppContent() {
                   <path d="M 4 28 C 6 16, 16 12, 16 18" />
                 </g>
               </svg>
-              <h2 className="gradient-text" style={{ fontSize: '1.75rem', fontWeight: 700, letterSpacing: '-0.04em' }}>Circl</h2>
+              <h2 className="gradient-text" style={{ fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.04em' }}>Circl</h2>
             </button>
-            <div className="flex flex-wrap flex-col md:flex-row items-end md:items-center gap-4 md:gap-4">
-              <p className="text-secondary md:mr-2" style={{ fontSize: '0.875rem' }}>Privacy-first Local Processing</p>
-              <div className="flex items-center gap-2">
-                <LanguageToggle />
-                <ThemeToggle />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <p className="text-secondary" style={{ fontSize: '0.8rem', display: 'none' }} id="privacy-label">Privacy-first</p>
+              <LanguageToggle />
+              <ThemeToggle />
             </div>
           </header>
 

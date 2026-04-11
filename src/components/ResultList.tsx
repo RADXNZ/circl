@@ -127,32 +127,36 @@ export const ResultList: React.FC<Props> = ({ analysis, trends }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4 slide-in w-full">
-      <div className="flex flex-wrap gap-4 items-center justify-between mb-2">
-        <div className="flex gap-2" style={{ flexWrap: 'wrap', paddingBottom: 4 }}>
+    <div className="flex flex-col gap-4 w-full">
+      {/* Filter & Controls Bar */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        {/* Category Filter Buttons */}
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           {categories.map(c => (
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               key={c}
               onClick={() => setFilter(c)}
               className={filter === c ? 'btn-primary' : 'btn-secondary'}
-              style={{ padding: '0.5rem 1rem', fontSize: '0.875rem', whiteSpace: 'nowrap' }}
+              style={{ padding: '0.4rem 0.85rem', fontSize: '0.82rem', whiteSpace: 'nowrap' }}
             >
               {getCategoryLabel(c)}
             </motion.button>
           ))}
         </div>
-        
-        <div className="flex items-center gap-3 w-full md:w-auto">
+
+        {/* Sort + Search Row */}
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
           {/* Sorting Dropdown */}
-          <div className="card flex items-center gap-2" style={{ padding: '0.5rem 1rem' }}>
+          <div className="card" style={{ padding: '0.45rem 0.9rem', flexShrink: 0 }}>
             <select 
               value={sortMode}
               onChange={e => setSortMode(e.target.value as SortMode)}
               style={{ 
                 background: 'transparent', border: 'none', color: 'var(--text-primary)', 
-                outline: 'none', cursor: 'pointer', fontSize: '0.875rem' 
+                outline: 'none', cursor: 'pointer', fontSize: '0.85rem',
+                fontFamily: 'inherit',
               }}
             >
               <option value="a-z" style={{ background: 'var(--bg-color)', color: 'var(--text-primary)' }}>{t('directory.sortAZ')}</option>
@@ -163,8 +167,8 @@ export const ResultList: React.FC<Props> = ({ analysis, trends }) => {
           </div>
           
           {/* Search Box */}
-          <div className="card flex items-center gap-2" style={{ padding: '0.5rem 1rem', width: '100%', maxWidth: 300 }}>
-            <Search size={16} className="text-secondary" />
+          <div className="card flex items-center gap-2" style={{ padding: '0.45rem 0.9rem', flex: 1, minWidth: 160, maxWidth: 320 }}>
+            <Search size={15} color="var(--text-secondary)" style={{ flexShrink: 0 }} />
             <input 
               type="text" 
               placeholder={t('directory.searchPlaceholder')} 
@@ -175,7 +179,9 @@ export const ResultList: React.FC<Props> = ({ analysis, trends }) => {
                 border: 'none', 
                 outline: 'none', 
                 color: 'var(--text-primary)',
-                width: '100%'
+                width: '100%',
+                fontSize: '0.875rem',
+                fontFamily: 'inherit',
               }}
             />
           </div>

@@ -60,46 +60,54 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
   return (
     <div className="landing-page fade-in">
       {/* Hero Section */}
-      <section className="hero-section flex flex-col items-center justify-center text-center mt-8 mb-24">
-        <h1 style={{ fontSize: '3.5rem', marginBottom: '1.25rem', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+      <section className="hero-section flex flex-col items-center justify-center text-center mt-8 mb-16">
+        <h1 style={{ marginBottom: '1.25rem', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
           {t('hero.title')} <span className="gradient-text">Circl</span>.
         </h1>
-        <p className="text-secondary" style={{ fontSize: '1.25rem', maxWidth: 650, marginBottom: '2.5rem', lineHeight: 1.5 }}>
+        <p className="text-secondary" style={{ fontSize: 'clamp(1rem, 3vw, 1.2rem)', maxWidth: 600, marginBottom: '2.5rem', lineHeight: 1.6 }}>
           {t('hero.subtitle')}
         </p>
         <button 
           className="btn-primary" 
-          style={{ padding: '1.25rem 3.5rem', fontSize: '1.125rem', borderRadius: '100px', display: 'flex', alignItems: 'center', gap: '0.75rem', boxShadow: '0 8px 30px rgba(29, 158, 117, 0.3)' }} 
+          style={{ 
+            padding: 'clamp(0.9rem, 3vw, 1.25rem) clamp(2rem, 6vw, 3.5rem)', 
+            fontSize: 'clamp(1rem, 3vw, 1.125rem)', 
+            borderRadius: '100px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '0.75rem', 
+            boxShadow: '0 8px 30px rgba(29, 158, 117, 0.3)' 
+          }} 
           onClick={onStart}
         >
-          <Zap size={20} className="text-[#0d0f12]" />
+          <Zap size={20} />
           <span>{t('hero.cta')}</span>
         </button>
       </section>
 
       {/* Features Section */}
-      <section className="features-section mb-24">
-        <div className="text-center mb-12">
-          <h2 style={{ fontSize: '2.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>{t('features.title')}</h2>
+      <section className="features-section mb-16">
+        <div className="text-center mb-10">
+          <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', marginBottom: '0.5rem', fontWeight: 600 }}>{t('features.title')}</h2>
           <p className="text-secondary">{t('features.subtitle')}</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="feature-card glass-panel" style={{ padding: '2.5rem', borderRadius: '24px' }}>
-            <div className="icon-wrapper bg-card outline-border mb-6" style={{ width: 64, height: 64, borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <EyeOff size={32} className="text-primary" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="feature-card glass-panel" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '20px' }}>
+            <div className="icon-wrapper bg-card outline-border mb-5" style={{ width: 56, height: 56, borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <EyeOff size={28} color="var(--primary-color)" />
             </div>
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: 600 }}>{t('features.feat1Title')}</h3>
+            <h3 style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', marginBottom: '0.75rem', fontWeight: 600 }}>{t('features.feat1Title')}</h3>
             <p className="text-secondary" style={{ lineHeight: 1.6 }}>
               {t('features.feat1Desc')}
             </p>
           </div>
 
-          <div className="feature-card glass-panel" style={{ padding: '2.5rem', borderRadius: '24px' }}>
-            <div className="icon-wrapper bg-card outline-border mb-6" style={{ width: 64, height: 64, borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Search size={32} className="text-primary" />
+          <div className="feature-card glass-panel" style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)', borderRadius: '20px' }}>
+            <div className="icon-wrapper bg-card outline-border mb-5" style={{ width: 56, height: 56, borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Search size={28} color="var(--primary-color)" />
             </div>
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: 600 }}>{t('features.feat2Title')}</h3>
+            <h3 style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', marginBottom: '0.75rem', fontWeight: 600 }}>{t('features.feat2Title')}</h3>
             <p className="text-secondary" style={{ lineHeight: 1.6 }}>
               {t('features.feat2Desc')}
             </p>
@@ -108,9 +116,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
       </section>
 
       {/* Tutorial Section */}
-      <section className="tutorial-section mb-24">
-        <div className="text-center mb-12">
-          <h2 style={{ fontSize: '2.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>{t('tutorial.title')}</h2>
+      <section className="tutorial-section mb-16">
+        <div className="text-center mb-10">
+          <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', marginBottom: '0.5rem', fontWeight: 600 }}>{t('tutorial.title')}</h2>
           <p className="text-secondary">{t('tutorial.subtitle')}</p>
         </div>
 
@@ -159,12 +167,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} 
       />
       <section className="faq-section mb-16">
-        <div className="text-center mb-10 border-b border-white/5 pb-8">
+        <div className="text-center mb-8" style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '2rem' }}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
             <Shield size={18} />
             <span style={{ fontWeight: 600, fontSize: '0.875rem' }}>{t('faq.guarantee')}</span>
           </div>
-          <h2 style={{ fontSize: '2.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>{t('faq.title')}</h2>
+          <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', marginBottom: '0.5rem', fontWeight: 600 }}>{t('faq.title')}</h2>
         </div>
 
         <div className="faq-list max-w-3xl mx-auto flex flex-col gap-4">
