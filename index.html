@@ -2,8 +2,47 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#060a13" id="meta-theme-color" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Circl - Privacy First Instagram Analytics</title>
+
+    <!--
+      CRITICAL: This inline script runs SYNCHRONOUSLY before ANY CSS or React loads.
+      It applies the correct theme class to <html> immediately, preventing
+      the Flash of Unstyled Content (FOUC) on mobile browsers.
+    -->
+    <script>
+      (function () {
+        var DARK_BG = '#060a13';
+        var LIGHT_BG = '#f1f5f9';
+        var stored = localStorage.getItem('circl-theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : (prefersDark ? 'dark' : 'light');
+
+        var html = document.documentElement;
+        if (theme === 'light') {
+          html.classList.add('light');
+          html.style.backgroundColor = LIGHT_BG;
+          html.style.colorScheme = 'light';
+        } else {
+          html.classList.add('dark');
+          html.style.backgroundColor = DARK_BG;
+          html.style.colorScheme = 'dark';
+        }
+
+        // Update meta theme-color immediately
+        var meta = document.getElementById('meta-theme-color');
+        if (meta) {
+          meta.setAttribute('content', theme === 'light' ? LIGHT_BG : DARK_BG);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
